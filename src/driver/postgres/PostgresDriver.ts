@@ -28,6 +28,7 @@ import { View } from "../../schema-builder/view/View"
 import { TableForeignKey } from "../../schema-builder/table/TableForeignKey"
 import { InstanceChecker } from "../../util/InstanceChecker"
 import { UpsertType } from "../types/UpsertType"
+import { ObjectUtils } from '../../util/ObjectUtils'
 
 /**
  * Organizes communication with PostgreSQL DBMS.
@@ -1447,7 +1448,7 @@ export class PostgresDriver implements Driver {
             try {
                 const pgNative =
                     this.options.nativeDriver || PlatformTools.load("pg-native")
-                if (pgNative && this.postgres.native)
+                if (pgNative && ObjectUtils.isObject(pgNative) && Object.keys(pgNative).length > 0 && this.postgres.native)
                     this.postgres = this.postgres.native
             } catch (e) {}
         } catch (e) {
